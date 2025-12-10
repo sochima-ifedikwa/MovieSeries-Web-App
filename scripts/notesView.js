@@ -10,7 +10,7 @@ export function renderNotesView(container) {
   const notes = getAllNotes();
   const keys = Object.keys(notes);
   if (keys.length === 0) {
-    container.innerHTML = `<div class="empty">No notes yet.</div>`;
+    container.innerHTML = "<div class=\"empty\">No notes yet.</div>";
     return;
   }
 
@@ -28,7 +28,7 @@ function escapeHtml(s = "") {
   return s.replace(
     /[&<>"']/g,
     (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[
         c
       ])
   );

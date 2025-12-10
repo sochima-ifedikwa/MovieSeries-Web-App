@@ -11,7 +11,7 @@ import { TMDB_IMG } from "./api.js";
 
 export function renderSeriesList(container, seriesArray) {
   if (!seriesArray || seriesArray.length === 0) {
-    container.innerHTML = `<div class="empty">No series found.</div>`;
+    container.innerHTML = "<div class=\"empty\">No series found.</div>";
     return;
   }
 
@@ -51,7 +51,7 @@ export function renderSeriesList(container, seriesArray) {
 
 export function renderSearchResults(container, resultsArray) {
   if (!resultsArray || resultsArray.length === 0) {
-    container.innerHTML = `<div class="empty">No movies or series found.</div>`;
+    container.innerHTML = "<div class=\"empty\">No movies or series found.</div>";
     return;
   }
 
@@ -103,7 +103,7 @@ function escapeHtml(str = "") {
   return str.replace(
     /[&<>"']/g,
     (s) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[
         s
       ])
   );

@@ -10,7 +10,7 @@ import { showLoading } from "./ui.js";
 
 export async function doSearch(container, query) {
   if (!query || query.trim().length === 0) {
-    container.innerHTML = `<div class="empty">Type a movie or series name and press Enter to search.</div>`;
+    container.innerHTML = "<div class=\"empty\">Type a movie or series name and press Enter to search.</div>";
     return;
   }
   showLoading(container, `Searching for "${query}"...`);

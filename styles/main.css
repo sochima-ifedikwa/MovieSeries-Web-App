@@ -1,3 +1,11 @@
+/*
+  styles/main.css
+  Global styles and design tokens for Movie Series Explorer.
+  Highlights:
+  - CSS variables for easy theming (root)
+  - Responsive grid and flex layouts
+  - Media queries to adjust layout on small screens
+*/
 :root {
   --bg: #0a1a2f;
   --panel: #0f293f;

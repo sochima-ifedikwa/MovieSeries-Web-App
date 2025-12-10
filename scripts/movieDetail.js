@@ -78,7 +78,7 @@ export async function renderMovieDetail(container, id) {
                         )}</div><small>${escapeHtml(c.character)}</small></div>`
                     )
                     .join("")
-                : '<div class="empty">No cast info</div>'
+                : "<div class=\"empty\">No cast info</div>"
             }
           </div>
         </section>
@@ -106,7 +106,7 @@ export async function renderMovieDetail(container, id) {
     const watchOrderEl = container.querySelector("#watchOrder");
     if (data.belongs_to_collection && data.belongs_to_collection.id) {
       try {
-        watchOrderEl.innerHTML = `<div class="loading">Loading watch order...</div>`;
+        watchOrderEl.innerHTML = "<div class=\"loading\">Loading watch order...</div>";
         const coll = await tmdbGetCollection(data.belongs_to_collection.id);
         if (coll && coll.parts && coll.parts.length > 0) {
           // sort by release_date (oldest -> newest)
@@ -148,7 +148,7 @@ export async function renderMovieDetail(container, id) {
             </ol>
           `;
         } else {
-          watchOrderEl.innerHTML = `<div class="empty">No watch order available for this collection.</div>`;
+          watchOrderEl.innerHTML = "<div class=\"empty\">No watch order available for this collection.</div>";
         }
       } catch (e) {
         watchOrderEl.innerHTML = `<div class="empty">Failed to load watch order: ${e.message}</div>`;
@@ -165,7 +165,7 @@ function escapeHtml(s = "") {
   return s.replace(
     /[&<>"']/g,
     (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[
         c
       ])
   );

@@ -5,7 +5,7 @@
   Key function: renderSeriesDetail(container, id)
 */
 // scripts/seriesDetail.js
-import { tmdbGetTVSeries, TMDB_IMG, omdbGetByTitle } from "./api.js";
+import { tmdbGetTVSeries, TMDB_IMG } from "./api.js";
 import { showLoading } from "./ui.js";
 import { addFavorite, removeFavorite, isFavorited } from "./favorites.js";
 import { saveNoteFor, getNoteFor } from "./notes.js";

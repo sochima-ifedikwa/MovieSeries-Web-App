@@ -11,7 +11,7 @@ import { TMDB_IMG } from "./api.js";
 export function renderFavorites(container) {
   const favs = getFavorites();
   if (!favs || favs.length === 0) {
-    container.innerHTML = `<div class="empty">You have no favorites yet.</div>`;
+    container.innerHTML = "<div class=\"empty\">You have no favorites yet.</div>";
     return;
   }
 
@@ -67,7 +67,7 @@ function escapeHtml(s = "") {
   return s.replace(
     /[&<>"']/g,
     (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[
         c
       ])
   );
