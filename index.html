@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Movie Series Explorer</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <button id="menuBtn" class="icon-btn">☰</button>
+      <h1><a href="#/">Movie Series Explorer</a></h1>
+    </div>
+
+    <div class="controls">
+      <input id="searchInput" type="search" placeholder="Search series (press Enter)" />
+      <button id="themeToggle" class="icon-btn">🌓</button>
+      <a href="#/favorites" class="icon-btn">★</a>
+    </div>
+  </header>
+
+  <nav id="sidebar" class="sidebar hidden">
+    <ul>
+      <li><a href="#/">Home</a></li>
+      <li><a href="#/favorites">Favorites</a></li>
+      <li><a href="#/notes">Notes</a></li>
+    </ul>
+  </nav>
+
+  <main id="app" class="app">
+    <!-- Router injects pages here -->
+  </main>
+
+  <footer class="site-footer">
+    <small>Built for WDD330 — Movie Series Explorer</small>
+  </footer>
+
+  <script type="module" src="scripts/app.js"></script>
+</body>
+</html>
