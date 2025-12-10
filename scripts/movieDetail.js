@@ -1,5 +1,10 @@
 // scripts/movieDetail.js
-import { tmdbGetMovie, TMDB_IMG, omdbGetByTitle } from "./api.js";
+import {
+  tmdbGetMovie,
+  tmdbGetCollection,
+  TMDB_IMG,
+  omdbGetByTitle,
+} from "./api.js";
 import { showLoading } from "./ui.js";
 import { addFavorite, isFavorited, removeFavorite } from "./favorites.js";
 
@@ -48,6 +53,8 @@ export async function renderMovieDetail(container, id) {
           <h3 style="margin-top:12px">Overview</h3>
           <p>${escapeHtml(data.overview || "No overview available.")}</p>
 
+          <div id="watchOrder" style="margin-top:16px"></div>
+
           <h4 style="margin-top:12px">Cast</h4>
           <div class="row" style="flex-wrap:wrap;gap:12px">
             ${
@@ -87,6 +94,61 @@ export async function renderMovieDetail(container, id) {
         favMovieBtn.textContent = "Unfavorite";
       }
     });
+
+    // If this movie belongs to a collection, show a watch order (collection parts)
+    const watchOrderEl = container.querySelector("#watchOrder");
+    if (data.belongs_to_collection && data.belongs_to_collection.id) {
+      try {
+        watchOrderEl.innerHTML = `<div class="loading">Loading watch order...</div>`;
+        const coll = await tmdbGetCollection(data.belongs_to_collection.id);
+        if (coll && coll.parts && coll.parts.length > 0) {
+          // sort by release_date (oldest -> newest)
+          const parts = coll.parts.slice().sort((a, b) => {
+            const da = a.release_date || "";
+            const db = b.release_date || "";
+            return da.localeCompare(db);
+          });
+
+          watchOrderEl.innerHTML = `
+            <h3 style="margin-top:12px">Watch Order — ${escapeHtml(
+              coll.name
+            )}</h3>
+            <ol class="panel" style="padding:12px;border-radius:8px;list-style-position:inside">
+              ${parts
+                .map(
+                  (p) => `
+                <li style="margin-bottom:8px">
+                  <a href="#/movie/${
+                    p.id
+                  }" style="display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit">
+                    <img src="${TMDB_IMG(
+                      p.poster_path,
+                      "w92"
+                    )}" alt="${escapeHtml(
+                    p.title
+                  )}" style="width:48px;height:72px;object-fit:cover;border-radius:6px"/>
+                    <div>
+                      <div style="font-weight:600">${escapeHtml(p.title)}</div>
+                      <div style="font-size:0.85rem;color:var(--muted)">${
+                        p.release_date ? p.release_date.slice(0, 4) : "—"
+                      }</div>
+                    </div>
+                  </a>
+                </li>
+              `
+                )
+                .join("")}
+            </ol>
+          `;
+        } else {
+          watchOrderEl.innerHTML = `<div class="empty">No watch order available for this collection.</div>`;
+        }
+      } catch (e) {
+        watchOrderEl.innerHTML = `<div class="empty">Failed to load watch order: ${e.message}</div>`;
+      }
+    } else {
+      watchOrderEl.innerHTML = ""; // no collection
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty">Failed to load movie: ${err.message}</div>`;
   }
