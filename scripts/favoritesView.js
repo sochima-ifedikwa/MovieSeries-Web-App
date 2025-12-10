@@ -38,7 +38,9 @@ export function renderFavorites(container) {
       if (e.target.dataset.remove) return;
       const id = el.dataset.id;
       const type = el.dataset.type;
-      if (type === "collection")
+      if (type === "series")
+        location.hash = `#/series/${id.replace("series-", "")}`;
+      else if (type === "collection")
         location.hash = `#/series/${id.replace("collection-", "")}`;
       else if (type === "movie")
         location.hash = `#/movie/${id.replace("movie-", "")}`;

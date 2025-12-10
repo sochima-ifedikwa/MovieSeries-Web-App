@@ -1,5 +1,5 @@
 // scripts/seriesDetail.js
-import { tmdbGetCollection, TMDB_IMG, omdbGetByTitle } from "./api.js";
+import { tmdbGetTVSeries, TMDB_IMG, omdbGetByTitle } from "./api.js";
 import { showLoading } from "./ui.js";
 import { addFavorite, removeFavorite, isFavorited } from "./favorites.js";
 import { saveNoteFor, getNoteFor } from "./notes.js";
@@ -7,8 +7,10 @@ import { saveNoteFor, getNoteFor } from "./notes.js";
 export async function renderSeriesDetail(container, id) {
   showLoading(container, "Loading series...");
   try {
-    const data = await tmdbGetCollection(id);
-    // data.parts = array of movies
+    const data = await tmdbGetTVSeries(id);
+    // data.seasons = array of seasons, data.number_of_seasons = total seasons
+    const seasons = data.seasons ? data.seasons.slice(0, 5) : []; // Show first 5 seasons
+
     container.innerHTML = `
       <div class="detail">
         <aside class="panel">
@@ -17,9 +19,21 @@ export async function renderSeriesDetail(container, id) {
     }" style="width:100%;border-radius:10px;">
           <h2>${escapeHtml(data.name)}</h2>
           <p>${escapeHtml(data.overview || "No description available.")}</p>
+          <div style="margin-top:8px;font-size:0.9rem;color:var(--muted)">
+            <p><strong>Seasons:</strong> ${data.number_of_seasons || "—"}</p>
+            <p><strong>Episodes:</strong> ${data.number_of_episodes || "—"}</p>
+            ${
+              data.first_air_date
+                ? `<p><strong>Started:</strong> ${data.first_air_date.slice(
+                    0,
+                    4
+                  )}</p>`
+                : ""
+            }
+          </div>
           <div class="row" style="margin-top:10px">
             <button id="favBtn" class="btn">${
-              isFavorited({ id: "collection-" + data.id })
+              isFavorited({ id: "series-" + data.id })
                 ? "Unfavorite"
                 : "Add to Favorites"
             }</button>
@@ -34,34 +48,29 @@ export async function renderSeriesDetail(container, id) {
         </aside>
 
         <section class="panel">
-          <h3>Watch Order</h3>
-          <ol id="watchList">
-            ${data.parts
+          <h3>Seasons</h3>
+          <div id="seasonsList" class="grid">
+            ${seasons
               .map(
-                (p) =>
-                  `<li data-movieid="${p.id}" class="watch-item">${escapeHtml(
-                    p.title
-                  )} (${
-                    p.release_date ? p.release_date.slice(0, 4) : "—"
-                  })</li>`
-              )
-              .join("")}
-          </ol>
-          <h3 style="margin-top:16px">Movies</h3>
-          <div id="moviesList" class="grid">
-            ${data.parts
-              .map(
-                (p) => `
-              <article class="card" data-mid="${p.id}">
-                <img src="${TMDB_IMG(p.poster_path, "w300")}" alt="${escapeHtml(
-                  p.title
-                )}"/>
-                <h4>${escapeHtml(p.title)}</h4>
+                (s) => `
+              <article class="card" data-season="${s.season_number}">
+                <img src="${TMDB_IMG(s.poster_path, "w300")}" alt="Season ${
+                  s.season_number
+                }"/>
+                <h4>Season ${s.season_number}</h4>
+                <p style="font-size:0.85rem;color:var(--muted)">${
+                  s.episode_count || 0
+                } episodes</p>
               </article>
             `
               )
               .join("")}
           </div>
+          <p style="color:var(--muted);margin-top:16px">
+            <em>Showing first ${seasons.length} of ${
+      data.number_of_seasons || 0
+    } seasons</em>
+          </p>
         </section>
       </div>
     `;
@@ -89,13 +98,13 @@ export async function renderSeriesDetail(container, id) {
     const favBtn = container.querySelector("#favBtn");
     favBtn.addEventListener("click", () => {
       const favObj = {
-        id: "collection-" + data.id,
-        type: "collection",
+        id: "series-" + data.id,
+        type: "series",
         name: data.name,
         poster: data.poster_path,
       };
       if (isFavorited(favObj)) {
-        removeFavorite("collection-" + data.id);
+        removeFavorite("series-" + data.id);
         favBtn.textContent = "Add to Favorites";
       } else {
         addFavorite(favObj);
@@ -103,11 +112,14 @@ export async function renderSeriesDetail(container, id) {
       }
     });
 
-    // Click movie cards -> route to movie detail
-    container.querySelectorAll("[data-mid]").forEach((el) => {
+    // Season cards (currently just display, could add episode details in future)
+    // Click season cards to show more info
+    container.querySelectorAll("[data-season]").forEach((el) => {
+      el.style.cursor = "pointer";
       el.addEventListener("click", () => {
-        const mid = el.dataset.mid;
-        location.hash = `#/movie/${mid}`;
+        alert(
+          `Season ${el.dataset.season} selected. Full episode list coming soon!`
+        );
       });
     });
   } catch (err) {
