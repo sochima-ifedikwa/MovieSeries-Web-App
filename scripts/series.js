@@ -1,3 +1,11 @@
+/*
+  scripts/series.js
+  UI renderer for lists of series and mixed search results.
+  Exports:
+  - renderSeriesList(container, seriesArray): render a list of TV series
+  - renderSearchResults(container, resultsArray): render mixed movie/TV results
+  Each item wires click handlers that update the location hash to navigate.
+*/
 // scripts/series.js
 import { TMDB_IMG } from "./api.js";
 

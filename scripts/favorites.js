@@ -1,3 +1,12 @@
+/*
+  scripts/favorites.js
+  Simple favorites manager using localStorage. Exposes CRUD-style helpers:
+  - getFavorites(): return array of saved favorites
+  - isFavorited(item): check membership
+  - addFavorite(item): add an item (object with id, type, name, poster)
+  - removeFavorite(itemId): remove by id
+  Favorites are stored under the key `movieSeries_favorites`.
+*/
 // scripts/favorites.js
 import { loadJSON, saveJSON } from "./storage.js";
 

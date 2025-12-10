@@ -1,3 +1,8 @@
+/*
+  scripts/search.js
+  Handles user-initiated searches. Uses the API helpers to search both movies
+  and TV series and delegates rendering of results to UI helper functions.
+*/
 // scripts/search.js
 import { tmdbSearchMoviesAndSeries } from "./api.js";
 import { renderSearchResults } from "./series.js";

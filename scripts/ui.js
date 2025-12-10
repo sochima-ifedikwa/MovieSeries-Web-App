@@ -1,3 +1,10 @@
+/*
+  scripts/ui.js
+  Small UI helpers (loading/empty states) and theme toggle logic.
+  - setupThemeToggle(button): applies stored theme preference and wires toggle
+  - showLoading(container, text): display loading placeholder
+  - showEmpty(container, text): display empty placeholder
+*/
 // scripts/ui.js
 export function showLoading(container, text = "Loading...") {
   container.innerHTML = `<div class="loading">${text}</div>`;

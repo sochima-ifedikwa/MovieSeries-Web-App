@@ -1,3 +1,8 @@
+/*
+  scripts/notesView.js
+  Renders a simple list of saved notes pulled from `notes.js`.
+  Each entry shows the series ID and a short preview of the note text.
+*/
 // scripts/notesView.js
 import { getAllNotes } from "./notes.js";
 

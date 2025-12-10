@@ -1,3 +1,11 @@
+/*
+  scripts/api.js
+  Thin wrapper around TheMovieDB (TMDB) and OMDb HTTP APIs.
+  Exported helper functions perform network requests and return parsed JSON.
+  Notes:
+  - API keys are included in this front-end project (public key usage).
+  - Functions throw on non-OK responses; callers should handle errors.
+*/
 // scripts/api.js
 const TMDB_KEY = "a18c34c74ad668a1725d7e315e646834";
 const OMDB_KEY = "7c5fa0a3";

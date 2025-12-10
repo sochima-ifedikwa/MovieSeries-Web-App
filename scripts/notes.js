@@ -1,3 +1,11 @@
+/*
+  scripts/notes.js
+  Simple notes storage helper built on top of localStorage.
+  - getAllNotes(): returns an object of saved notes keyed by series id
+  - getNoteFor(id): return a single note text
+  - saveNoteFor(id, text): persist note text for a series
+  Notes are stored under the key `movieSeries_notes`.
+*/
 // scripts/notes.js
 import { loadJSON, saveJSON } from "./storage.js";
 const KEY = "movieSeries_notes";

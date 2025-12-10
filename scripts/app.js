@@ -1,3 +1,12 @@
+/*
+  scripts/app.js
+  Entry point for the single-page application (SPA).
+  Responsibilities:
+  - Wire up top-level UI controls (menu, theme, search)
+  - Implement a simple hash-based router and render page views
+  - Initialize the app on DOMContentLoaded
+  See: renderHome, renderSearch, renderSeries, renderMovie
+*/
 // scripts/app.js
 import { setupThemeToggle, showLoading } from "./ui.js";
 import { doSearch } from "./search.js";

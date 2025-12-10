@@ -1,3 +1,9 @@
+/*
+  scripts/favoritesView.js
+  Renders the user's favorites as a grid of cards and wires up remove
+  actions. Uses `getFavorites()` from `favorites.js` to read stored data.
+  Clicking a favorite navigates to the appropriate detail view.
+*/
 // scripts/favoritesView.js
 import { getFavorites, removeFavorite } from "./favorites.js";
 import { TMDB_IMG } from "./api.js";

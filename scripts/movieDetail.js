@@ -1,3 +1,10 @@
+/*
+  scripts/movieDetail.js
+  Renders detailed information for a single movie (overview, cast, ratings).
+  Also detects if the movie belongs to a TMDB collection and renders a
+  watch-order list of the collection parts (sorted by release date).
+  Key function: renderMovieDetail(container, id)
+*/
 // scripts/movieDetail.js
 import {
   tmdbGetMovie,

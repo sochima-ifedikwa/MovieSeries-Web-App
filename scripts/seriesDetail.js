@@ -1,3 +1,9 @@
+/*
+  scripts/seriesDetail.js
+  Renders details for a TV series (seasons, basic metadata) and provides
+  interactions for notes and favorites. Fetches series details from TMDB.
+  Key function: renderSeriesDetail(container, id)
+*/
 // scripts/seriesDetail.js
 import { tmdbGetTVSeries, TMDB_IMG, omdbGetByTitle } from "./api.js";
 import { showLoading } from "./ui.js";
